@@ -26,17 +26,16 @@ final class NetgenTagsBackendTest extends TestCase
 
     private MockObject&TranslationHelper $translationHelperMock;
 
-    private MockObject&ConfigResolverInterface $configResolverMock;
-
     private NetgenTagsBackend $backend;
 
     protected function setUp(): void
     {
         $this->tagsServiceMock = $this->createMock(TagsService::class);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
-        $this->configResolverMock = $this->createMock(ConfigResolverInterface::class);
 
-        $this->configResolverMock
+        $configResolverMock = $this->createMock(ConfigResolverInterface::class);
+
+        $configResolverMock
             ->method('getParameter')
             ->with(self::identicalTo('languages'))
             ->willReturn(['eng-GB', 'cro-HR']);
@@ -44,7 +43,7 @@ final class NetgenTagsBackendTest extends TestCase
         $this->backend = new NetgenTagsBackend(
             $this->tagsServiceMock,
             $this->translationHelperMock,
-            $this->configResolverMock,
+            $configResolverMock,
         );
     }
 

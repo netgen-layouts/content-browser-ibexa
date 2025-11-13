@@ -17,7 +17,9 @@ use function implode;
 
 final class ObjectState implements ColumnValueProviderInterface
 {
-    public function __construct(private Repository $repository) {}
+    public function __construct(
+        private Repository $repository,
+    ) {}
 
     public function getValue(ItemInterface $item): ?string
     {

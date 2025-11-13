@@ -43,11 +43,6 @@ final class ItemTest extends TestCase
         self::assertSame(24, $this->item->getParentId());
     }
 
-    public function testIsVisible(): void
-    {
-        self::assertTrue($this->item->isVisible());
-    }
-
     public function testIsSelectable(): void
     {
         self::assertTrue($this->item->isSelectable());

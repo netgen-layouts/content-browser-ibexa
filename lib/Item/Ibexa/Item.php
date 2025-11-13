@@ -13,14 +13,17 @@ final class Item implements ItemInterface, LocationInterface, IbexaInterface
 {
     private Content $content;
 
-    public function __construct(private Location $location, private int $value, private bool $selectable = true)
-    {
+    public function __construct(
+        private Location $location,
+        private int $value,
+        private bool $selectable = true,
+    ) {
         $this->content = $this->location->getContent();
     }
 
     public function getLocationId(): int
     {
-        return (int) $this->location->id;
+        return $this->location->id;
     }
 
     public function getValue(): int
@@ -35,7 +38,7 @@ final class Item implements ItemInterface, LocationInterface, IbexaInterface
 
     public function getParentId(): ?int
     {
-        $parentId = (int) $this->location->parentLocationId;
+        $parentId = $this->location->parentLocationId;
 
         return $parentId !== 1 ? $parentId : null;
     }

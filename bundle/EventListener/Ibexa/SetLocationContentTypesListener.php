@@ -6,18 +6,19 @@ namespace Netgen\Bundle\ContentBrowserIbexaBundle\EventListener\Ibexa;
 
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\ContentBrowser\Event\ConfigLoadEvent;
-use Netgen\ContentBrowser\Event\ContentBrowserEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use function in_array;
 
 final class SetLocationContentTypesListener implements EventSubscriberInterface
 {
-    public function __construct(private ConfigResolverInterface $configResolver) {}
+    public function __construct(
+        private ConfigResolverInterface $configResolver,
+    ) {}
 
     public static function getSubscribedEvents(): array
     {
-        return [ContentBrowserEvents::CONFIG_LOAD => 'onConfigLoad'];
+        return [ConfigLoadEvent::class => 'onConfigLoad'];
     }
 
     public function onConfigLoad(ConfigLoadEvent $event): void

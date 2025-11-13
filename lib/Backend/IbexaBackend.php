@@ -28,8 +28,8 @@ use function explode;
 use function in_array;
 use function is_array;
 use function is_string;
+use function mb_trim;
 use function sprintf;
-use function trim;
 use function usort;
 
 final class IbexaBackend implements BackendInterface
@@ -80,7 +80,7 @@ final class IbexaBackend implements BackendInterface
         return $items;
     }
 
-    public function loadLocation($id): Item
+    public function loadLocation(int|string $id): Item
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId((int) $id);
@@ -99,7 +99,7 @@ final class IbexaBackend implements BackendInterface
         );
     }
 
-    public function loadItem($value): Item
+    public function loadItem(int|string $value): Item
     {
         $criteria = [];
         if ($this->config->getItemType() === 'ibexa_location') {
@@ -228,7 +228,7 @@ final class IbexaBackend implements BackendInterface
         $query = new LocationQuery();
 
         $searchText = $searchQuery->getSearchText();
-        if (trim($searchText) !== '') {
+        if (mb_trim($searchText) !== '') {
             $query->query = new Criterion\FullText($searchText);
         }
 
@@ -259,7 +259,7 @@ final class IbexaBackend implements BackendInterface
         $query = new LocationQuery();
 
         $searchText = $searchQuery->getSearchText();
-        if (trim($searchText) !== '') {
+        if (mb_trim($searchText) !== '') {
             $query->query = new Criterion\FullText($searchText);
         }
 
@@ -286,23 +286,26 @@ final class IbexaBackend implements BackendInterface
 
     /**
      * Builds the item from provided search hit.
+     *
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Search\SearchHit<\Ibexa\Contracts\Core\Repository\Values\Content\Location> $searchHit
      */
     private function buildItem(SearchHit $searchHit): Item
     {
-        /** @var \Ibexa\Contracts\Core\Repository\Values\Content\Location $location */
         $location = $searchHit->valueObject;
 
         return new Item(
             $location,
             $this->config->getItemType() === 'ibexa_location' ?
-                (int) $location->id :
-                (int) $location->contentInfo->id,
+                $location->id :
+                $location->contentInfo->id,
             $this->isSelectable($location->getContent()),
         );
     }
 
     /**
      * Builds the items from search result and its hits.
+     *
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Search\SearchResult<\Ibexa\Contracts\Core\Repository\Values\Content\Location> $searchResult
      *
      * @return \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item[]
      */

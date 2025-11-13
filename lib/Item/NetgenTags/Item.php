@@ -10,7 +10,10 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
 final class Item implements ItemInterface, LocationInterface, NetgenTagsInterface
 {
-    public function __construct(private Tag $tag, private string $name) {}
+    public function __construct(
+        private Tag $tag,
+        private string $name,
+    ) {}
 
     public function getLocationId(): int
     {
@@ -32,7 +35,7 @@ final class Item implements ItemInterface, LocationInterface, NetgenTagsInterfac
         return $this->tag->parentTagId !== 0 ? $this->tag->parentTagId : null;
     }
 
-    public function isVisible(): bool
+    public function isVisible(): true
     {
         return true;
     }

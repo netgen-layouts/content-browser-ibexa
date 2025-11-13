@@ -170,7 +170,7 @@ final class IbexaBackendTest extends TestCase
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = [
-            new SearchHit(['valueObject' => $this->getLocation(null, null, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(0, 0, 2)]),
         ];
 
         $this->searchServiceMock
@@ -224,8 +224,8 @@ final class IbexaBackendTest extends TestCase
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = [
-            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
-            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(0, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(0, 2)]),
         ];
 
         $this->searchServiceMock
@@ -300,8 +300,8 @@ final class IbexaBackendTest extends TestCase
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = [
-            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
-            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(0, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(0, 2)]),
         ];
 
         $this->searchServiceMock
@@ -339,8 +339,8 @@ final class IbexaBackendTest extends TestCase
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = [
-            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
-            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(0, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(0, 2)]),
         ];
 
         $this->searchServiceMock
@@ -580,7 +580,7 @@ final class IbexaBackendTest extends TestCase
     /**
      * Returns the location object used in tests.
      */
-    private function getLocation(?int $id = null, ?int $parentLocationId = null, ?int $contentId = null): Location
+    private function getLocation(int $id = 0, int $parentLocationId = 0, int $contentId = 0): Location
     {
         return new Location(
             [

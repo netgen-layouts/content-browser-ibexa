@@ -37,7 +37,7 @@ final class NetgenTagsBackend implements BackendInterface
         yield $this->buildRootItem();
     }
 
-    public function loadLocation($id): Item
+    public function loadLocation(int|string $id): Item
     {
         if ((int) $id === 0) {
             return $this->buildRootItem();
@@ -46,7 +46,7 @@ final class NetgenTagsBackend implements BackendInterface
         return $this->internalLoadItem((int) $id);
     }
 
-    public function loadItem($value): Item
+    public function loadItem(int|string $value): Item
     {
         return $this->internalLoadItem((int) $value);
     }

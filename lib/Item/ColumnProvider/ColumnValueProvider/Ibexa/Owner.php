@@ -12,7 +12,9 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Owner implements ColumnValueProviderInterface
 {
-    public function __construct(private Repository $repository) {}
+    public function __construct(
+        private Repository $repository,
+    ) {}
 
     public function getValue(ItemInterface $item): ?string
     {

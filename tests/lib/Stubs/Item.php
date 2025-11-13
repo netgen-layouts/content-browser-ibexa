@@ -8,7 +8,9 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Item implements ItemInterface
 {
-    public function __construct(private int $value) {}
+    public function __construct(
+        private int $value,
+    ) {}
 
     public function getValue(): int
     {
@@ -20,12 +22,12 @@ final class Item implements ItemInterface
         return 'This is a name (' . $this->value . ')';
     }
 
-    public function isVisible(): bool
+    public function isVisible(): true
     {
         return true;
     }
 
-    public function isSelectable(): bool
+    public function isSelectable(): true
     {
         return true;
     }
