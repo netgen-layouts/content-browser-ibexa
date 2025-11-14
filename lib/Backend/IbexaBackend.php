@@ -331,7 +331,7 @@ final class IbexaBackend implements BackendInterface
 
             $allowedContentTypes = $this->config->getParameter('allowed_content_types');
             if (is_string($allowedContentTypes) && $allowedContentTypes !== '') {
-                $this->allowedContentTypes = array_map('trim', explode(',', $allowedContentTypes));
+                $this->allowedContentTypes = array_map('mb_trim', explode(',', $allowedContentTypes));
             }
         }
 
@@ -350,7 +350,7 @@ final class IbexaBackend implements BackendInterface
         if ($this->config->hasParameter('location_content_types')) {
             $locationContentTypes = $this->config->getParameter('location_content_types');
             if (is_string($locationContentTypes) && $locationContentTypes !== '') {
-                return array_map('trim', explode(',', $locationContentTypes));
+                return array_map('mb_trim', explode(',', $locationContentTypes));
             }
 
             if (is_array($locationContentTypes) && count($locationContentTypes) > 0) {
