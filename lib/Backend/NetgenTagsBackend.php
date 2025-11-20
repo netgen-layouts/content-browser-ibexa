@@ -101,20 +101,6 @@ final class NetgenTagsBackend implements BackendInterface
         );
     }
 
-    public function search(string $searchText, int $offset = 0, int $limit = 25): iterable
-    {
-        $searchQuery = new SearchQuery($searchText);
-        $searchQuery->setOffset($offset);
-        $searchQuery->setLimit($limit);
-
-        return $this->searchItems($searchQuery)->getResults();
-    }
-
-    public function searchCount(string $searchText): int
-    {
-        return $this->searchItemsCount(new SearchQuery($searchText));
-    }
-
     public function searchItems(SearchQuery $searchQuery): SearchResultInterface
     {
         $languages = $this->configResolver->getParameter('languages');
