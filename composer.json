@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^8.4",
-        "netgen/content-browser": "~1.4.0",
+        "netgen/content-browser": "~2.0.0",
         "ibexa/core": "^5.0"
     },
     "require-dev": {
@@ -51,7 +51,7 @@
     "prefer-stable": true,
     "extra": {
         "branch-alias": {
-            "dev-master": "1.4.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     }
 }
