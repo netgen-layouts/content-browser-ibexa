@@ -24,14 +24,11 @@ final class NetgenTagsBackendTest extends TestCase
 {
     private MockObject&TagsService $tagsServiceMock;
 
-    private MockObject&TranslationHelper $translationHelperMock;
-
     private NetgenTagsBackend $backend;
 
     protected function setUp(): void
     {
         $this->tagsServiceMock = $this->createMock(TagsService::class);
-        $this->translationHelperMock = $this->createMock(TranslationHelper::class);
 
         $configResolverMock = $this->createMock(ConfigResolverInterface::class);
 
@@ -42,7 +39,7 @@ final class NetgenTagsBackendTest extends TestCase
 
         $this->backend = new NetgenTagsBackend(
             $this->tagsServiceMock,
-            $this->translationHelperMock,
+            $this->createMock(TranslationHelper::class),
             $configResolverMock,
         );
     }
