@@ -16,6 +16,6 @@ final class LocationId implements ColumnValueProviderInterface
             return null;
         }
 
-        return (string) $item->getLocation()->id;
+        return (string) $item->location->id;
     }
 }

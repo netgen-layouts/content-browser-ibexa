@@ -16,6 +16,6 @@ final class ParentTagId implements ColumnValueProviderInterface
             return null;
         }
 
-        return (string) $item->getTag()->parentTagId;
+        return (string) $item->tag->parentTagId;
     }
 }

@@ -16,6 +16,6 @@ final class TagId implements ColumnValueProviderInterface
             return null;
         }
 
-        return (string) $item->getTag()->id;
+        return (string) $item->tag->id;
     }
 }

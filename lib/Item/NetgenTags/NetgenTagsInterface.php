@@ -11,5 +11,5 @@ interface NetgenTagsInterface
     /**
      * Returns the tag.
      */
-    public function getTag(): Tag;
+    public Tag $tag { get; }
 }

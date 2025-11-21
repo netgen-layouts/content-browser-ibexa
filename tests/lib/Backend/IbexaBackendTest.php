@@ -104,7 +104,7 @@ final class IbexaBackendTest extends TestCase
 
         $location = $this->backend->loadLocation(2);
 
-        self::assertSame(2, $location->getLocationId());
+        self::assertSame(2, $location->locationId);
     }
 
     public function testLoadLocationThrowsNotFoundException(): void
@@ -149,7 +149,7 @@ final class IbexaBackendTest extends TestCase
 
         $item = $this->backend->loadItem(2);
 
-        self::assertSame(2, $item->getValue());
+        self::assertSame(2, $item->value);
     }
 
     public function testLoadItemWithContent(): void
@@ -181,7 +181,7 @@ final class IbexaBackendTest extends TestCase
 
         $item = $this->backend->loadItem(2);
 
-        self::assertSame(2, $item->getValue());
+        self::assertSame(2, $item->value);
     }
 
     public function testLoadItemThrowsNotFoundException(): void
@@ -242,7 +242,7 @@ final class IbexaBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $locations);
 
         foreach ($locations as $location) {
-            self::assertSame(2, $location->getParentId());
+            self::assertSame(2, $location->parentId);
         }
     }
 
@@ -320,7 +320,7 @@ final class IbexaBackendTest extends TestCase
         foreach ($items as $item) {
             // Additional InstanceOf assertion to make PHPStan happy
             self::assertInstanceOf(Item::class, $item);
-            self::assertSame(2, $item->getParentId());
+            self::assertSame(2, $item->parentId);
         }
     }
 
@@ -361,7 +361,7 @@ final class IbexaBackendTest extends TestCase
         foreach ($items as $item) {
             // Additional InstanceOf assertion to make PHPStan happy
             self::assertInstanceOf(Item::class, $item);
-            self::assertSame(2, $item->getParentId());
+            self::assertSame(2, $item->parentId);
         }
     }
 

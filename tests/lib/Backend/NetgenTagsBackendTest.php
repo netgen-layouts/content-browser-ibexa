@@ -69,7 +69,7 @@ final class NetgenTagsBackendTest extends TestCase
 
         $location = $this->backend->loadLocation(1);
 
-        self::assertSame(1, $location->getLocationId());
+        self::assertSame(1, $location->locationId);
     }
 
     public function testLoadLocationThrowsNotFoundException(): void
@@ -96,7 +96,7 @@ final class NetgenTagsBackendTest extends TestCase
 
         $item = $this->backend->loadItem(1);
 
-        self::assertSame(1, $item->getValue());
+        self::assertSame(1, $item->value);
     }
 
     public function testLoadItemThrowsNotFoundException(): void
@@ -133,7 +133,7 @@ final class NetgenTagsBackendTest extends TestCase
 
         foreach ($this->backend->getSubLocations(new Item($tag, 'tag')) as $location) {
             self::assertInstanceOf(Item::class, $location);
-            self::assertSame(1, $location->getParentId());
+            self::assertSame(1, $location->parentId);
 
             $locations[] = $location;
         }
@@ -199,7 +199,7 @@ final class NetgenTagsBackendTest extends TestCase
 
         foreach ($this->backend->getSubItems(new Item($tag, 'tag')) as $item) {
             self::assertInstanceOf(Item::class, $item);
-            self::assertSame(1, $item->getParentId());
+            self::assertSame(1, $item->parentId);
 
             $items[] = $item;
         }
@@ -225,7 +225,7 @@ final class NetgenTagsBackendTest extends TestCase
 
         foreach ($this->backend->getSubItems(new Item($tag, 'tag'), 5, 10) as $item) {
             self::assertInstanceOf(Item::class, $item);
-            self::assertSame(1, $item->getParentId());
+            self::assertSame(1, $item->parentId);
 
             $items[] = $item;
         }

@@ -36,7 +36,7 @@ final class ObjectState implements ColumnValueProviderInterface
             fn (ObjectStateGroup $group): IbexaObjectState => $this->repository->sudo(
                 fn (): IbexaObjectState => $this->repository
                     ->getObjectStateService()
-                    ->getContentState($item->getContent()->contentInfo, $group),
+                    ->getContentState($item->content->contentInfo, $group),
             ),
             $groups,
         );

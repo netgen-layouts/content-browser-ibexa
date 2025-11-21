@@ -23,16 +23,15 @@ final class SetSectionsListener implements EventSubscriberInterface
 
     public function onConfigLoad(ConfigLoadEvent $event): void
     {
-        if (!in_array($event->getItemType(), ['ibexa_content', 'ibexa_location'], true)) {
+        if (!in_array($event->itemType, ['ibexa_content', 'ibexa_location'], true)) {
             return;
         }
 
-        $config = $event->getConfig();
-        if ($config->hasParameter('sections')) {
+        if ($event->config->hasParameter('sections')) {
             return;
         }
 
-        $config->setParameter(
+        $event->config->setParameter(
             'sections',
             $this->configResolver->getParameter(
                 'backend.ibexa.default_sections',

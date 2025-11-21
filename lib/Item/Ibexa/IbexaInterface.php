@@ -12,10 +12,10 @@ interface IbexaInterface
     /**
      * Returns the location.
      */
-    public function getLocation(): Location;
+    public Location $location { get; }
 
     /**
      * Returns the content.
      */
-    public function getContent(): Content;
+    public Content $content { get; }
 }

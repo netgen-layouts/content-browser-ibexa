@@ -26,7 +26,7 @@ final class Owner implements ColumnValueProviderInterface
             function () use ($item): string {
                 try {
                     return $this->repository->getContentService()->loadContent(
-                        $item->getContent()->contentInfo->ownerId,
+                        $item->content->contentInfo->ownerId,
                     )->getName() ?? '';
                 } catch (NotFoundException) {
                     // Owner might be deleted in Ibexa database

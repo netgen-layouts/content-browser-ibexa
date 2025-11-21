@@ -27,12 +27,12 @@ final class ParentTag implements ColumnValueProviderInterface
 
         return $this->tagsService->sudo(
             function () use ($item): string {
-                if (in_array($item->getTag()->parentTagId, ['0', 0, null], true)) {
+                if (in_array($item->tag->parentTagId, ['0', 0, null], true)) {
                     return '(No parent)';
                 }
 
                 return (string) $this->translationHelper->getTranslatedByMethod(
-                    $this->tagsService->loadTag($item->getTag()->parentTagId),
+                    $this->tagsService->loadTag($item->tag->parentTagId),
                     'getKeyword',
                 );
             },

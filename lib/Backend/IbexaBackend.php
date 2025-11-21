@@ -69,11 +69,11 @@ final class IbexaBackend implements BackendInterface
         usort(
             $items,
             static function (LocationInterface $item1, LocationInterface $item2) use ($sortMap): int {
-                if ($item1->getLocationId() === $item2->getLocationId()) {
+                if ($item1->locationId === $item2->locationId) {
                     return 0;
                 }
 
-                return $sortMap[(int) $item1->getLocationId()] <=> $sortMap[(int) $item2->getLocationId()];
+                return $sortMap[(int) $item1->locationId] <=> $sortMap[(int) $item2->locationId];
             },
         );
 
@@ -135,7 +135,7 @@ final class IbexaBackend implements BackendInterface
         $this->locationContentTypes ??= $this->getLocationContentTypes();
 
         $criteria = [
-            new Criterion\ParentLocationId((int) $location->getLocationId()),
+            new Criterion\ParentLocationId((int) $location->locationId),
         ];
 
         if (count($this->locationContentTypes) > 0) {
@@ -145,7 +145,7 @@ final class IbexaBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd($criteria);
         $query->limit = 9999;
-        $query->sortClauses = $location->getLocation()->getSortClauses();
+        $query->sortClauses = $location->location->getSortClauses();
 
         $result = $this->searchService->findLocations($query);
 
@@ -157,7 +157,7 @@ final class IbexaBackend implements BackendInterface
         $this->locationContentTypes ??= $this->getLocationContentTypes();
 
         $criteria = [
-            new Criterion\ParentLocationId((int) $location->getLocationId()),
+            new Criterion\ParentLocationId((int) $location->locationId),
         ];
 
         if (count($this->locationContentTypes) > 0) {
@@ -180,14 +180,14 @@ final class IbexaBackend implements BackendInterface
         }
 
         $criteria = [
-            new Criterion\ParentLocationId((int) $location->getLocationId()),
+            new Criterion\ParentLocationId((int) $location->locationId),
         ];
 
         $query = new LocationQuery();
         $query->offset = $offset;
         $query->limit = $limit;
         $query->filter = new Criterion\LogicalAnd($criteria);
-        $query->sortClauses = $location->getLocation()->getSortClauses();
+        $query->sortClauses = $location->location->getSortClauses();
 
         $result = $this->searchService->findLocations($query);
 
@@ -197,7 +197,7 @@ final class IbexaBackend implements BackendInterface
     public function getSubItemsCount(LocationInterface $location): int
     {
         $criteria = [
-            new Criterion\ParentLocationId((int) $location->getLocationId()),
+            new Criterion\ParentLocationId((int) $location->locationId),
         ];
 
         $query = new LocationQuery();
@@ -224,7 +224,7 @@ final class IbexaBackend implements BackendInterface
 
         $searchLocation = $searchQuery->getLocation();
         if ($searchLocation instanceof LocationInterface) {
-            $location = $this->locationService->loadLocation((int) $searchLocation->getLocationId());
+            $location = $this->locationService->loadLocation((int) $searchLocation->locationId);
 
             $criteria[] = new Criterion\Subtree($location->pathString);
             $criteria[] = new Criterion\LogicalNot(new Criterion\LocationId($location->id));
@@ -255,7 +255,7 @@ final class IbexaBackend implements BackendInterface
 
         $searchLocation = $searchQuery->getLocation();
         if ($searchLocation instanceof LocationInterface) {
-            $location = $this->locationService->loadLocation((int) $searchLocation->getLocationId());
+            $location = $this->locationService->loadLocation((int) $searchLocation->locationId);
 
             $criteria[] = new Criterion\Subtree($location->pathString);
             $criteria[] = new Criterion\LogicalNot(new Criterion\LocationId($location->id));

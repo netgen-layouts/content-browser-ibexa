@@ -25,31 +25,31 @@ final class ItemTest extends TestCase
 
     public function testGetLocationId(): void
     {
-        self::assertSame(42, $this->item->getLocationId());
+        self::assertSame(42, $this->item->locationId);
     }
 
     public function testGetValue(): void
     {
-        self::assertSame(42, $this->item->getValue());
+        self::assertSame(42, $this->item->value);
     }
 
     public function testGetName(): void
     {
-        self::assertSame('Keyword', $this->item->getName());
+        self::assertSame('Keyword', $this->item->name);
     }
 
     public function testGetParentId(): void
     {
-        self::assertSame(24, $this->item->getParentId());
+        self::assertSame(24, $this->item->parentId);
     }
 
     public function testIsSelectable(): void
     {
-        self::assertTrue($this->item->isSelectable());
+        self::assertTrue($this->item->isSelectable);
     }
 
     public function testGetTag(): void
     {
-        self::assertSame($this->tag, $this->item->getTag());
+        self::assertSame($this->tag, $this->item->tag);
     }
 }

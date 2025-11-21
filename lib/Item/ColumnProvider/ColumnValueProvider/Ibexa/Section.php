@@ -25,7 +25,7 @@ final class Section implements ColumnValueProviderInterface
             fn (): string => $this->repository
                 ->getSectionService()
                 ->loadSection(
-                    $item->getContent()->contentInfo->sectionId,
+                    $item->content->contentInfo->sectionId,
                 )->name,
         );
     }

@@ -23,16 +23,15 @@ final class SetLocationContentTypesListener implements EventSubscriberInterface
 
     public function onConfigLoad(ConfigLoadEvent $event): void
     {
-        if (!in_array($event->getItemType(), ['ibexa_content', 'ibexa_location'], true)) {
+        if (!in_array($event->itemType, ['ibexa_content', 'ibexa_location'], true)) {
             return;
         }
 
-        $config = $event->getConfig();
-        if ($config->hasParameter('location_content_types')) {
+        if ($event->config->hasParameter('location_content_types')) {
             return;
         }
 
-        $config->setParameter(
+        $event->config->setParameter(
             'location_content_types',
             $this->configResolver->getParameter(
                 'backend.ibexa.location_content_types',

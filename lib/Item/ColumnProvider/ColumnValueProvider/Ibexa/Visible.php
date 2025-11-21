@@ -16,6 +16,6 @@ final class Visible implements ColumnValueProviderInterface
             return null;
         }
 
-        return $item->getLocation()->invisible ? 'No' : 'Yes';
+        return $item->location->invisible ? 'No' : 'Yes';
     }
 }

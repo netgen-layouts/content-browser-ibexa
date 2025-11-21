@@ -16,6 +16,6 @@ final class Priority implements ColumnValueProviderInterface
             return null;
         }
 
-        return (string) $item->getLocation()->priority;
+        return (string) $item->location->priority;
     }
 }

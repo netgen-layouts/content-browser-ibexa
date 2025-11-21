@@ -16,6 +16,6 @@ final class ContentId implements ColumnValueProviderInterface
             return null;
         }
 
-        return (string) $item->getContent()->contentInfo->id;
+        return (string) $item->content->contentInfo->id;
     }
 }

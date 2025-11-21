@@ -10,43 +10,28 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
 final class Item implements ItemInterface, LocationInterface, NetgenTagsInterface
 {
+    public int $locationId {
+        get => $this->tag->id;
+    }
+
+    public int $value {
+        get => $this->tag->id;
+    }
+
+    public ?int $parentId {
+        get => $this->tag->parentTagId !== 0 ? $this->tag->parentTagId : null;
+    }
+
+    public true $isVisible {
+        get => true;
+    }
+
+    public bool $isSelectable {
+        get => $this->tag->id !== 0;
+    }
+
     public function __construct(
-        private Tag $tag,
-        private string $name,
+        private(set) Tag $tag,
+        private(set) string $name,
     ) {}
-
-    public function getLocationId(): int
-    {
-        return $this->tag->id;
-    }
-
-    public function getValue(): int
-    {
-        return $this->tag->id;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getParentId(): ?int
-    {
-        return $this->tag->parentTagId !== 0 ? $this->tag->parentTagId : null;
-    }
-
-    public function isVisible(): true
-    {
-        return true;
-    }
-
-    public function isSelectable(): bool
-    {
-        return $this->tag->id !== 0;
-    }
-
-    public function getTag(): Tag
-    {
-        return $this->tag;
-    }
 }

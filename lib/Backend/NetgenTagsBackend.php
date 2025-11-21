@@ -58,7 +58,7 @@ final class NetgenTagsBackend implements BackendInterface
         }
 
         $tags = $this->tagsService->loadTagChildren(
-            $location->getTag(),
+            $location->tag,
         );
 
         return $this->buildItems($tags);
@@ -71,7 +71,7 @@ final class NetgenTagsBackend implements BackendInterface
         }
 
         return $this->tagsService->getTagChildrenCount(
-            $location->getTag(),
+            $location->tag,
         );
     }
 
@@ -82,7 +82,7 @@ final class NetgenTagsBackend implements BackendInterface
         }
 
         $tags = $this->tagsService->loadTagChildren(
-            $location->getTag(),
+            $location->tag,
             $offset,
             $limit,
         );
@@ -97,7 +97,7 @@ final class NetgenTagsBackend implements BackendInterface
         }
 
         return $this->tagsService->getTagChildrenCount(
-            $location->getTag(),
+            $location->tag,
         );
     }
 

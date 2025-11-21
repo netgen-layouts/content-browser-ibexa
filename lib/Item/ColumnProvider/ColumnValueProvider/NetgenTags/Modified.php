@@ -20,6 +20,6 @@ final class Modified implements ColumnValueProviderInterface
             return null;
         }
 
-        return $item->getTag()->modificationDate->format($this->dateFormat);
+        return $item->tag->modificationDate->format($this->dateFormat);
     }
 }

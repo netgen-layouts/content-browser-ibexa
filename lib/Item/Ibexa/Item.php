@@ -11,55 +11,33 @@ use Netgen\ContentBrowser\Item\LocationInterface;
 
 final class Item implements ItemInterface, LocationInterface, IbexaInterface
 {
-    private Content $content;
+    public private(set) Content $content;
+
+    public int $locationId {
+        get => $this->location->id;
+    }
+
+    public string $name {
+        get => $this->content->getName() ?? '';
+    }
+
+    public ?int $parentId {
+        get {
+            $parentId = $this->location->parentLocationId;
+
+            return $parentId !== 1 ? $parentId : null;
+        }
+    }
+
+    public bool $isVisible {
+        get => !$this->location->invisible;
+    }
 
     public function __construct(
-        private Location $location,
-        private int $value,
-        private bool $selectable = true,
+        private(set) Location $location,
+        private(set) int $value,
+        private(set) bool $isSelectable = true,
     ) {
         $this->content = $this->location->getContent();
-    }
-
-    public function getLocationId(): int
-    {
-        return $this->location->id;
-    }
-
-    public function getValue(): int
-    {
-        return $this->value;
-    }
-
-    public function getName(): string
-    {
-        return $this->content->getName() ?? '';
-    }
-
-    public function getParentId(): ?int
-    {
-        $parentId = $this->location->parentLocationId;
-
-        return $parentId !== 1 ? $parentId : null;
-    }
-
-    public function isVisible(): bool
-    {
-        return !$this->location->invisible;
-    }
-
-    public function isSelectable(): bool
-    {
-        return $this->selectable;
-    }
-
-    public function getLocation(): Location
-    {
-        return $this->location;
-    }
-
-    public function getContent(): Content
-    {
-        return $this->content;
     }
 }
