@@ -25,7 +25,7 @@ final class IbexaDefaultPreviewPass implements CompilerPassInterface
 
         /** @var string[] $siteAccessList */
         $siteAccessList = $container->getParameter('ibexa.site_access.list');
-        $scopes = [...['default'], ...$siteAccessList];
+        $scopes = ['default', ...$siteAccessList];
 
         foreach ($scopes as $scope) {
             $scopeParams = [
