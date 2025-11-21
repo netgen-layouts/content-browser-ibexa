@@ -429,8 +429,8 @@ final class IbexaBackendTest extends TestCase
 
         $result = $this->backend->searchItems(new SearchQuery('test'));
 
-        self::assertCount(2, $result->getResults());
-        self::assertContainsOnlyInstancesOf(Item::class, $result->getResults());
+        self::assertCount(2, $result->results);
+        self::assertContainsOnlyInstancesOf(Item::class, $result->results);
     }
 
     public function testSearchItemsWithOffsetAndLimit(): void
@@ -458,13 +458,13 @@ final class IbexaBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $query = new SearchQuery('test');
-        $query->setOffset(5);
-        $query->setLimit(10);
+        $query->offset = 5;
+        $query->limit = 10;
 
         $result = $this->backend->searchItems($query);
 
-        self::assertCount(2, $result->getResults());
-        self::assertContainsOnlyInstancesOf(Item::class, $result->getResults());
+        self::assertCount(2, $result->results);
+        self::assertContainsOnlyInstancesOf(Item::class, $result->results);
     }
 
     public function testSearchItemsCount(): void

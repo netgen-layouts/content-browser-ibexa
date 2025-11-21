@@ -213,7 +213,7 @@ final class IbexaBackend implements BackendInterface
     {
         $query = new LocationQuery();
 
-        $searchText = $searchQuery->getSearchText();
+        $searchText = $searchQuery->searchText;
         if (mb_trim($searchText) !== '') {
             $query->query = new Criterion\FullText($searchText);
         }
@@ -222,7 +222,7 @@ final class IbexaBackend implements BackendInterface
             new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
         ];
 
-        $searchLocation = $searchQuery->getLocation();
+        $searchLocation = $searchQuery->location;
         if ($searchLocation instanceof LocationInterface) {
             $location = $this->locationService->loadLocation((int) $searchLocation->locationId);
 
@@ -232,8 +232,8 @@ final class IbexaBackend implements BackendInterface
 
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $query->offset = $searchQuery->getOffset();
-        $query->limit = $searchQuery->getLimit();
+        $query->offset = $searchQuery->offset;
+        $query->limit = $searchQuery->limit;
 
         $result = $this->searchService->findLocations($query);
 
@@ -244,7 +244,7 @@ final class IbexaBackend implements BackendInterface
     {
         $query = new LocationQuery();
 
-        $searchText = $searchQuery->getSearchText();
+        $searchText = $searchQuery->searchText;
         if (mb_trim($searchText) !== '') {
             $query->query = new Criterion\FullText($searchText);
         }
@@ -253,7 +253,7 @@ final class IbexaBackend implements BackendInterface
             new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
         ];
 
-        $searchLocation = $searchQuery->getLocation();
+        $searchLocation = $searchQuery->location;
         if ($searchLocation instanceof LocationInterface) {
             $location = $this->locationService->loadLocation((int) $searchLocation->locationId);
 

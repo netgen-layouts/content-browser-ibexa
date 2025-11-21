@@ -110,11 +110,11 @@ final class NetgenTagsBackend implements BackendInterface
         }
 
         $tags = $this->tagsService->loadTagsByKeyword(
-            $searchQuery->getSearchText(),
+            $searchQuery->searchText,
             $languages[0],
             true,
-            $searchQuery->getOffset(),
-            $searchQuery->getLimit(),
+            $searchQuery->offset,
+            $searchQuery->limit,
         );
 
         return new SearchResult($this->buildItems($tags));
@@ -129,7 +129,7 @@ final class NetgenTagsBackend implements BackendInterface
         }
 
         return $this->tagsService->getTagsByKeywordCount(
-            $searchQuery->getSearchText(),
+            $searchQuery->searchText,
             $languages[0],
         );
     }
