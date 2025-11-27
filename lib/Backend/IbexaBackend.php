@@ -73,7 +73,7 @@ final class IbexaBackend implements BackendInterface
                     return 0;
                 }
 
-                return $sortMap[(int) $item1->locationId] <=> $sortMap[(int) $item2->locationId];
+                return $sortMap[$item1->locationId] <=> $sortMap[$item2->locationId];
             },
         );
 

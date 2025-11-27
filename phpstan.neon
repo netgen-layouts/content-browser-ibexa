@@ -2,9 +2,3 @@ includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
-
-parameters:
-    ignoreErrors:
-        # Ibexa CMS
-
-        - "#Casting to int something that's already int.#"
