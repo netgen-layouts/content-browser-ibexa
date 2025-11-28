@@ -8,6 +8,7 @@ use Ibexa\Contracts\Core\Repository\LocationService;
 use Ibexa\Contracts\Core\Repository\SearchService;
 use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
 use Ibexa\Contracts\Core\Repository\Values\Content\LocationQuery;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\ContentName;
 use Ibexa\Contracts\Core\Repository\Values\Content\Search\SearchHit;
@@ -220,7 +221,7 @@ final class IbexaBackendTest extends TestCase
             ],
         );
 
-        $query->sortClauses = [new ContentName(LocationQuery::SORT_ASC)];
+        $query->sortClauses = [new ContentName(Query::SORT_ASC)];
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = [
@@ -296,7 +297,7 @@ final class IbexaBackendTest extends TestCase
             ],
         );
 
-        $query->sortClauses = [new ContentName(LocationQuery::SORT_ASC)];
+        $query->sortClauses = [new ContentName(Query::SORT_ASC)];
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = [
@@ -335,7 +336,7 @@ final class IbexaBackendTest extends TestCase
             ],
         );
 
-        $query->sortClauses = [new ContentName(LocationQuery::SORT_ASC)];
+        $query->sortClauses = [new ContentName(Query::SORT_ASC)];
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = [
