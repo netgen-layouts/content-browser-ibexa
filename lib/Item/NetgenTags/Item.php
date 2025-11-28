@@ -31,7 +31,7 @@ final class Item implements ItemInterface, LocationInterface, NetgenTagsInterfac
     }
 
     public function __construct(
-        private(set) Tag $tag,
-        private(set) string $name,
+        public private(set) Tag $tag,
+        public private(set) string $name,
     ) {}
 }
