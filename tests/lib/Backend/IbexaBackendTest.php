@@ -7,6 +7,7 @@ namespace Netgen\ContentBrowser\Ibexa\Tests\Backend;
 use Ibexa\Contracts\Core\Repository\LocationService;
 use Ibexa\Contracts\Core\Repository\SearchService;
 use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location as ContractsLocation;
 use Ibexa\Contracts\Core\Repository\Values\Content\LocationQuery;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
@@ -496,7 +497,7 @@ final class IbexaBackendTest extends TestCase
     /**
      * Returns the location object used in tests.
      */
-    private function getLocation(int $id = 0, int $parentLocationId = 0, int $contentId = 0): Location
+    private function getLocation(int $id = 0, int $parentLocationId = 0, int $contentId = 0): ContractsLocation
     {
         return new Location(
             [
@@ -508,8 +509,8 @@ final class IbexaBackendTest extends TestCase
                         'id' => $contentId,
                     ],
                 ),
-                'sortField' => Location::SORT_FIELD_NAME,
-                'sortOrder' => Location::SORT_ORDER_ASC,
+                'sortField' => ContractsLocation::SORT_FIELD_NAME,
+                'sortOrder' => ContractsLocation::SORT_ORDER_ASC,
             ],
         );
     }
