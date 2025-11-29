@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Netgen\ContentBrowser\Ibexa\Backend;
 
 use DateTimeImmutable;
-use Generator;
 use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException as APINotFoundException;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\Helper\TranslationHelper;
@@ -184,9 +183,9 @@ final class NetgenTagsBackend implements BackendInterface
     /**
      * Builds the items from provided tags.
      *
-     * @return \Generator<\Netgen\ContentBrowser\Ibexa\Item\NetgenTags\Item>
+     * @return iterable<\Netgen\ContentBrowser\Ibexa\Item\NetgenTags\Item>
      */
-    private function buildItems(TagList $tags): Generator
+    private function buildItems(TagList $tags): iterable
     {
         foreach ($tags as $tag) {
             yield $this->buildItem($tag);
