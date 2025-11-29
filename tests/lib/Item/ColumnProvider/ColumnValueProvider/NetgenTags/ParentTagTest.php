@@ -48,13 +48,13 @@ final class ParentTagTest extends TestCase
         $parentTag = new Tag(['keywords' => ['eng-GB', 'Parent tag']]);
 
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTag')
             ->with(self::identicalTo(42))
             ->willReturn($parentTag);
 
         $this->translationHelperMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getTranslatedByMethod')
             ->with(self::identicalTo($parentTag), self::identicalTo('getKeyword'))
             ->willReturn('Parent tag');
@@ -77,11 +77,11 @@ final class ParentTagTest extends TestCase
         );
 
         $this->tagsServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadTag');
 
         $this->translationHelperMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('getTranslatedByMethod');
 
         self::assertSame(

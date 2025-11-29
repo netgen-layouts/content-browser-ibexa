@@ -81,7 +81,7 @@ final class OwnerTest extends TestCase
         );
 
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContent')
             ->with(self::identicalTo(42))
             ->willReturn($ownerContent);
@@ -114,7 +114,7 @@ final class OwnerTest extends TestCase
         );
 
         $this->contentServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadContent')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('user', 42));

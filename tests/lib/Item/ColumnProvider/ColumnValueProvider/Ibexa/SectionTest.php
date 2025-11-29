@@ -76,7 +76,7 @@ final class SectionTest extends TestCase
         );
 
         $this->sectionServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadSection')
             ->with(self::identicalTo(42))
             ->willReturn($section);

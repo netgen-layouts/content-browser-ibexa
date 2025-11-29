@@ -47,7 +47,7 @@ final class NetgenTagsBackendTest extends TestCase
     public function testGetSections(): void
     {
         $this->tagsServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadTag');
 
         $locations = [...$this->backend->getSections()];
@@ -62,7 +62,7 @@ final class NetgenTagsBackendTest extends TestCase
     public function testLoadLocation(): void
     {
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
             ->willReturn($this->getTag(1));
@@ -78,7 +78,7 @@ final class NetgenTagsBackendTest extends TestCase
         $this->expectExceptionMessage('Item with value "1" not found.');
 
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
             ->willThrowException(new IbexaNotFoundException('tag', 1));
@@ -89,7 +89,7 @@ final class NetgenTagsBackendTest extends TestCase
     public function testLoadItem(): void
     {
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
             ->willReturn($this->getTag(1));
@@ -105,7 +105,7 @@ final class NetgenTagsBackendTest extends TestCase
         $this->expectExceptionMessage('Item with value "1" not found.');
 
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
             ->willThrowException(new IbexaNotFoundException('tag', 1));
@@ -118,7 +118,7 @@ final class NetgenTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTagChildren')
             ->with(
                 self::identicalTo($tag),
@@ -144,7 +144,7 @@ final class NetgenTagsBackendTest extends TestCase
     public function testGetSubLocationsWithInvalidItem(): void
     {
         $this->tagsServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadTagChildren');
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
@@ -158,7 +158,7 @@ final class NetgenTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getTagChildrenCount')
             ->with(self::identicalTo($tag))
             ->willReturn(2);
@@ -171,7 +171,7 @@ final class NetgenTagsBackendTest extends TestCase
     public function testGetSubLocationsCountWithInvalidItem(): void
     {
         $this->tagsServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('getTagChildrenCount');
 
         $count = $this->backend->getSubLocationsCount(new StubLocation(0));
@@ -184,7 +184,7 @@ final class NetgenTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTagChildren')
             ->with(
                 self::identicalTo($tag),
@@ -212,7 +212,7 @@ final class NetgenTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadTagChildren')
             ->with(
                 self::identicalTo($tag),
@@ -236,7 +236,7 @@ final class NetgenTagsBackendTest extends TestCase
     public function testGetSubItemsWithInvalidItem(): void
     {
         $this->tagsServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('loadTagChildren');
 
         $locations = $this->backend->getSubItems(new StubLocation(0));
@@ -250,7 +250,7 @@ final class NetgenTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('getTagChildrenCount')
             ->with(self::identicalTo($tag))
             ->willReturn(2);
@@ -263,7 +263,7 @@ final class NetgenTagsBackendTest extends TestCase
     public function testGetSubItemsCountWithInvalidItem(): void
     {
         $this->tagsServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('getTagChildrenCount');
 
         $count = $this->backend->getSubItemsCount(new StubLocation(0));

@@ -96,7 +96,7 @@ final class ObjectStateTest extends TestCase
         );
 
         $this->objectStateServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadObjectStateGroups')
             ->willReturn([$objectStateGroup1, $objectStateGroup2]);
 
@@ -134,12 +134,12 @@ final class ObjectStateTest extends TestCase
         );
 
         $this->objectStateServiceMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('loadObjectStateGroups')
             ->willReturn([]);
 
         $this->objectStateServiceMock
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('getContentState');
 
         self::assertSame('', $this->provider->getValue($item));
