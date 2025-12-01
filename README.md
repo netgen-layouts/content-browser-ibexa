@@ -2,7 +2,16 @@
 
 ## Installation instructions
 
-[INSTALL.md](INSTALL.md)
+### Use Composer
+
+Run the following command to install Netgen Content Browser & Ibexa CMS
+integration:
+
+```bash
+composer require netgen/content-browser-ibexa
+```
+
+Symfony Flex will automatically enable the bundle.
 
 ## Running tests
 
@@ -11,6 +20,6 @@ Running tests requires that you have complete vendors installed, so run
 
 You can run unit tests by calling `composer test` from the repo root:
 
-```
+```bash
 $ composer test
 ```
