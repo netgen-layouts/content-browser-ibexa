@@ -27,7 +27,7 @@ final class NetgenContentBrowserIbexaExtension extends Extension implements Prep
             new FileLocator(__DIR__ . '/../Resources/config'),
         );
 
-        $loader->load('services.yaml');
+        $loader->load('ibexa/services.yaml');
 
         /** @var array<string, string> $activatedBundles */
         $activatedBundles = $container->getParameter('kernel.bundles');
@@ -46,25 +46,23 @@ final class NetgenContentBrowserIbexaExtension extends Extension implements Prep
 
         $loader->load('default_settings.yaml');
 
-        $this->doPrepend($container, 'config.yaml', 'netgen_content_browser');
-        $this->doPrepend($container, 'image.yaml', 'ibexa');
+        $prependConfigs = [
+            'ibexa/image.yaml' => 'ibexa',
+            'ibexa/item_types.yaml' => 'netgen_content_browser',
+        ];
 
         /** @var array<string, string> $activatedBundles */
         $activatedBundles = $container->getParameter('kernel.bundles');
 
         if (array_key_exists('NetgenTagsBundle', $activatedBundles)) {
-            $this->doPrepend($container, 'netgen_tags/config.yaml', 'netgen_content_browser');
+            $prependConfigs['netgen_tags/item_types.yaml'] = 'netgen_content_browser';
         }
-    }
 
-    /**
-     * Allow an extension to prepend the extension configurations.
-     */
-    private function doPrepend(ContainerBuilder $container, string $fileName, string $configName): void
-    {
-        $configFile = __DIR__ . '/../Resources/config/' . $fileName;
-        $config = Yaml::parse((string) file_get_contents($configFile));
-        $container->prependExtensionConfig($configName, $config);
-        $container->addResource(new FileResource($configFile));
+        foreach ($prependConfigs as $configFile => $prependConfig) {
+            $configFile = __DIR__ . '/../Resources/config/' . $configFile;
+            $config = Yaml::parse((string) file_get_contents($configFile));
+            $container->prependExtensionConfig($prependConfig, $config);
+            $container->addResource(new FileResource($configFile));
+        }
     }
 }
