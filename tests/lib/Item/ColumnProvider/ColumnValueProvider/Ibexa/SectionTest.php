@@ -15,36 +15,36 @@ use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Se
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Section::class)]
 final class SectionTest extends TestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&SectionService $sectionServiceMock;
+    private Stub&SectionService $sectionServiceStub;
 
     private Section $provider;
 
     protected function setUp(): void
     {
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getSectionService']);
-        $this->sectionServiceMock = $this->createMock(SectionService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
+        $this->sectionServiceStub = self::createStub(SectionService::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getSectionService')
-            ->willReturn($this->sectionServiceMock);
+            ->willReturn($this->sectionServiceStub);
 
         $this->provider = new Section(
-            $this->repositoryMock,
+            $this->repositoryStub,
         );
     }
 
@@ -75,8 +75,7 @@ final class SectionTest extends TestCase
             ],
         );
 
-        $this->sectionServiceMock
-            ->expects($this->once())
+        $this->sectionServiceStub
             ->method('loadSection')
             ->with(self::identicalTo(42))
             ->willReturn($section);

@@ -16,40 +16,36 @@ use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\API\Repository\Values\Tags\TagList;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(NetgenTagsBackend::class)]
 final class NetgenTagsBackendTest extends TestCase
 {
-    private MockObject&TagsService $tagsServiceMock;
+    private Stub&TagsService $tagsServiceStub;
 
     private NetgenTagsBackend $backend;
 
     protected function setUp(): void
     {
-        $this->tagsServiceMock = $this->createMock(TagsService::class);
+        $this->tagsServiceStub = self::createStub(TagsService::class);
 
-        $configResolverMock = $this->createMock(ConfigResolverInterface::class);
+        $configResolverStub = self::createStub(ConfigResolverInterface::class);
 
-        $configResolverMock
+        $configResolverStub
             ->method('getParameter')
             ->with(self::identicalTo('languages'))
             ->willReturn(['eng-GB', 'cro-HR']);
 
         $this->backend = new NetgenTagsBackend(
-            $this->tagsServiceMock,
-            $this->createMock(TranslationHelper::class),
-            $configResolverMock,
+            $this->tagsServiceStub,
+            self::createStub(TranslationHelper::class),
+            $configResolverStub,
         );
     }
 
     public function testGetSections(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->never())
-            ->method('loadTag');
-
         $locations = [...$this->backend->getSections()];
 
         self::assertCount(1, $locations);
@@ -61,8 +57,7 @@ final class NetgenTagsBackendTest extends TestCase
 
     public function testLoadLocation(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTag')
             ->with(self::identicalTo(1))
             ->willReturn($this->getTag(1));
@@ -77,8 +72,7 @@ final class NetgenTagsBackendTest extends TestCase
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('Item with value "1" not found.');
 
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTag')
             ->with(self::identicalTo(1))
             ->willThrowException(new IbexaNotFoundException('tag', 1));
@@ -88,8 +82,7 @@ final class NetgenTagsBackendTest extends TestCase
 
     public function testLoadItem(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTag')
             ->with(self::identicalTo(1))
             ->willReturn($this->getTag(1));
@@ -104,8 +97,7 @@ final class NetgenTagsBackendTest extends TestCase
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('Item with value "1" not found.');
 
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTag')
             ->with(self::identicalTo(1))
             ->willThrowException(new IbexaNotFoundException('tag', 1));
@@ -117,8 +109,7 @@ final class NetgenTagsBackendTest extends TestCase
     {
         $tag = $this->getTag(1);
 
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTagChildren')
             ->with(
                 self::identicalTo($tag),
@@ -143,10 +134,6 @@ final class NetgenTagsBackendTest extends TestCase
 
     public function testGetSubLocationsWithInvalidItem(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->never())
-            ->method('loadTagChildren');
-
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
         self::assertIsArray($locations);
@@ -157,8 +144,7 @@ final class NetgenTagsBackendTest extends TestCase
     {
         $tag = $this->getTag(1);
 
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('getTagChildrenCount')
             ->with(self::identicalTo($tag))
             ->willReturn(2);
@@ -170,10 +156,6 @@ final class NetgenTagsBackendTest extends TestCase
 
     public function testGetSubLocationsCountWithInvalidItem(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->never())
-            ->method('getTagChildrenCount');
-
         $count = $this->backend->getSubLocationsCount(new StubLocation(0));
 
         self::assertSame(0, $count);
@@ -183,8 +165,7 @@ final class NetgenTagsBackendTest extends TestCase
     {
         $tag = $this->getTag(1);
 
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTagChildren')
             ->with(
                 self::identicalTo($tag),
@@ -211,8 +192,7 @@ final class NetgenTagsBackendTest extends TestCase
     {
         $tag = $this->getTag(1);
 
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTagChildren')
             ->with(
                 self::identicalTo($tag),
@@ -235,10 +215,6 @@ final class NetgenTagsBackendTest extends TestCase
 
     public function testGetSubItemsWithInvalidItem(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->never())
-            ->method('loadTagChildren');
-
         $locations = $this->backend->getSubItems(new StubLocation(0));
 
         self::assertIsArray($locations);
@@ -249,8 +225,7 @@ final class NetgenTagsBackendTest extends TestCase
     {
         $tag = $this->getTag(1);
 
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('getTagChildrenCount')
             ->with(self::identicalTo($tag))
             ->willReturn(2);
@@ -262,10 +237,6 @@ final class NetgenTagsBackendTest extends TestCase
 
     public function testGetSubItemsCountWithInvalidItem(): void
     {
-        $this->tagsServiceMock
-            ->expects($this->never())
-            ->method('getTagChildrenCount');
-
         $count = $this->backend->getSubItemsCount(new StubLocation(0));
 
         self::assertSame(0, $count);

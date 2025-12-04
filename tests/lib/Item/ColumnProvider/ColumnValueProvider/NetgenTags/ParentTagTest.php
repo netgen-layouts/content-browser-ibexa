@@ -11,26 +11,33 @@ use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\Core\Repository\TagsService;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ParentTag::class)]
 final class ParentTagTest extends TestCase
 {
-    private MockObject&TagsService $tagsServiceMock;
+    private Stub&TagsService $tagsServiceStub;
 
-    private MockObject&TranslationHelper $translationHelperMock;
+    private Stub&TranslationHelper $translationHelperStub;
 
     private ParentTag $provider;
 
     protected function setUp(): void
     {
-        $this->tagsServiceMock = $this->createPartialMock(TagsService::class, ['loadTag']);
-        $this->translationHelperMock = $this->createMock(TranslationHelper::class);
+        $this->tagsServiceStub = self::createStub(TagsService::class);
+        $this->translationHelperStub = self::createStub(TranslationHelper::class);
+
+        $this->tagsServiceStub
+            ->method('sudo')
+            ->with(self::anything())
+            ->willReturnCallback(
+                fn (callable $callback) => $callback($this->tagsServiceStub),
+            );
 
         $this->provider = new ParentTag(
-            $this->tagsServiceMock,
-            $this->translationHelperMock,
+            $this->tagsServiceStub,
+            $this->translationHelperStub,
         );
     }
 
@@ -47,14 +54,12 @@ final class ParentTagTest extends TestCase
 
         $parentTag = new Tag(['keywords' => ['eng-GB', 'Parent tag']]);
 
-        $this->tagsServiceMock
-            ->expects($this->once())
+        $this->tagsServiceStub
             ->method('loadTag')
             ->with(self::identicalTo(42))
             ->willReturn($parentTag);
 
-        $this->translationHelperMock
-            ->expects($this->once())
+        $this->translationHelperStub
             ->method('getTranslatedByMethod')
             ->with(self::identicalTo($parentTag), self::identicalTo('getKeyword'))
             ->willReturn('Parent tag');
@@ -75,14 +80,6 @@ final class ParentTagTest extends TestCase
             ),
             'Name',
         );
-
-        $this->tagsServiceMock
-            ->expects($this->never())
-            ->method('loadTag');
-
-        $this->translationHelperMock
-            ->expects($this->never())
-            ->method('getTranslatedByMethod');
 
         self::assertSame(
             '(No parent)',

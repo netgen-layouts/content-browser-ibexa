@@ -16,36 +16,36 @@ use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Ob
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ObjectState::class)]
 final class ObjectStateTest extends TestCase
 {
-    private MockObject&Repository $repositoryMock;
+    private Stub&Repository $repositoryStub;
 
-    private MockObject&ObjectStateService $objectStateServiceMock;
+    private Stub&ObjectStateService $objectStateServiceStub;
 
     private ObjectState $provider;
 
     protected function setUp(): void
     {
-        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getObjectStateService']);
-        $this->objectStateServiceMock = $this->createMock(ObjectStateService::class);
+        $this->repositoryStub = self::createStub(Repository::class);
+        $this->objectStateServiceStub = self::createStub(ObjectStateService::class);
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock),
+                fn (callable $callback) => $callback($this->repositoryStub),
             );
 
-        $this->repositoryMock
+        $this->repositoryStub
             ->method('getObjectStateService')
-            ->willReturn($this->objectStateServiceMock);
+            ->willReturn($this->objectStateServiceStub);
 
         $this->provider = new ObjectState(
-            $this->repositoryMock,
+            $this->repositoryStub,
         );
     }
 
@@ -95,12 +95,11 @@ final class ObjectStateTest extends TestCase
             ],
         );
 
-        $this->objectStateServiceMock
-            ->expects($this->once())
+        $this->objectStateServiceStub
             ->method('loadObjectStateGroups')
             ->willReturn([$objectStateGroup1, $objectStateGroup2]);
 
-        $this->objectStateServiceMock
+        $this->objectStateServiceStub
             ->method('getContentState')
             ->willReturnMap(
                 [
@@ -133,14 +132,9 @@ final class ObjectStateTest extends TestCase
             24,
         );
 
-        $this->objectStateServiceMock
-            ->expects($this->once())
+        $this->objectStateServiceStub
             ->method('loadObjectStateGroups')
             ->willReturn([]);
-
-        $this->objectStateServiceMock
-            ->expects($this->never())
-            ->method('getContentState');
 
         self::assertSame('', $this->provider->getValue($item));
     }

@@ -23,15 +23,15 @@ use Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Location as StubLocation;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(IbexaBackend::class)]
 final class IbexaBackendTest extends TestCase
 {
-    private MockObject&SearchService $searchServiceMock;
+    private Stub&SearchService $searchServiceStub;
 
-    private MockObject&LocationService $locationServiceMock;
+    private Stub&LocationService $locationServiceStub;
 
     /**
      * @var string[]
@@ -50,16 +50,16 @@ final class IbexaBackendTest extends TestCase
         $this->defaultSections = [2, 43, 5];
         $this->locationContentTypes = ['frontpage', 'category'];
 
-        $this->searchServiceMock = $this->createMock(SearchService::class);
-        $this->locationServiceMock = $this->createMock(LocationService::class);
+        $this->searchServiceStub = self::createStub(SearchService::class);
+        $this->locationServiceStub = self::createStub(LocationService::class);
 
         $configuration = new Configuration('ibexa_location', 'Ibexa location', []);
         $configuration->setParameter('sections', $this->defaultSections);
         $configuration->setParameter('location_content_types', $this->locationContentTypes);
 
         $this->backend = new IbexaBackend(
-            $this->searchServiceMock,
-            $this->locationServiceMock,
+            $this->searchServiceStub,
+            $this->locationServiceStub,
             $configuration,
         );
     }
@@ -76,8 +76,7 @@ final class IbexaBackendTest extends TestCase
             new SearchHit(['valueObject' => $this->getLocation(5)]),
         ];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -98,8 +97,7 @@ final class IbexaBackendTest extends TestCase
             new SearchHit(['valueObject' => $this->getLocation(2)]),
         ];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -120,8 +118,7 @@ final class IbexaBackendTest extends TestCase
         $searchResult = new SearchResult();
         $searchResult->searchHits = [];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -143,8 +140,7 @@ final class IbexaBackendTest extends TestCase
             new SearchHit(['valueObject' => $this->getLocation(2)]),
         ];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -157,8 +153,8 @@ final class IbexaBackendTest extends TestCase
     public function testLoadItemWithContent(): void
     {
         $this->backend = new IbexaBackend(
-            $this->searchServiceMock,
-            $this->locationServiceMock,
+            $this->searchServiceStub,
+            $this->locationServiceStub,
             new Configuration('ibexa_content', 'Ibexa content', []),
         );
 
@@ -175,8 +171,7 @@ final class IbexaBackendTest extends TestCase
             new SearchHit(['valueObject' => $this->getLocation(0, 0, 2)]),
         ];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -201,8 +196,7 @@ final class IbexaBackendTest extends TestCase
         $searchResult = new SearchResult();
         $searchResult->searchHits = [];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -230,8 +224,7 @@ final class IbexaBackendTest extends TestCase
             new SearchHit(['valueObject' => $this->getLocation(0, 2)]),
         ];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -250,10 +243,6 @@ final class IbexaBackendTest extends TestCase
 
     public function testGetSubLocationsWithInvalidItem(): void
     {
-        $this->searchServiceMock
-            ->expects($this->never())
-            ->method('findLocations');
-
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
         self::assertIsArray($locations);
@@ -274,8 +263,7 @@ final class IbexaBackendTest extends TestCase
         $searchResult = new SearchResult();
         $searchResult->totalCount = 2;
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -306,8 +294,7 @@ final class IbexaBackendTest extends TestCase
             new SearchHit(['valueObject' => $this->getLocation(0, 2)]),
         ];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -345,8 +332,7 @@ final class IbexaBackendTest extends TestCase
             new SearchHit(['valueObject' => $this->getLocation(0, 2)]),
         ];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -369,10 +355,6 @@ final class IbexaBackendTest extends TestCase
 
     public function testGetSubItemsWithInvalidItem(): void
     {
-        $this->searchServiceMock
-            ->expects($this->never())
-            ->method('findLocations');
-
         $items = $this->backend->getSubItems(new StubLocation(0));
 
         self::assertIsArray($items);
@@ -392,8 +374,7 @@ final class IbexaBackendTest extends TestCase
         $searchResult = new SearchResult();
         $searchResult->totalCount = 2;
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($query))
             ->willReturn($searchResult);
@@ -423,8 +404,7 @@ final class IbexaBackendTest extends TestCase
             new SearchHit(['valueObject' => $this->getLocation()]),
         ];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
@@ -453,8 +433,7 @@ final class IbexaBackendTest extends TestCase
             new SearchHit(['valueObject' => $this->getLocation()]),
         ];
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
@@ -483,8 +462,7 @@ final class IbexaBackendTest extends TestCase
         $searchResult = new SearchResult();
         $searchResult->totalCount = 2;
 
-        $this->searchServiceMock
-            ->expects($this->once())
+        $this->searchServiceStub
             ->method('findLocations')
             ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
