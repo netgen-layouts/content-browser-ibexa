@@ -32,7 +32,7 @@ final class ParentTagTest extends TestCase
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->tagsServiceStub),
+                fn (callable $callback): mixed => $callback($this->tagsServiceStub),
             );
 
         $this->provider = new ParentTag(
