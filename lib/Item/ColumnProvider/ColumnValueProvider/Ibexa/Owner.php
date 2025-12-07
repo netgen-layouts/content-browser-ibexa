@@ -23,9 +23,9 @@ final class Owner implements ColumnValueProviderInterface
         }
 
         return $this->repository->sudo(
-            function () use ($item): string {
+            static function (Repository $repository) use ($item): string {
                 try {
-                    return $this->repository->getContentService()->loadContent(
+                    return $repository->getContentService()->loadContent(
                         $item->content->contentInfo->ownerId,
                     )->getName() ?? '';
                 } catch (NotFoundException) {

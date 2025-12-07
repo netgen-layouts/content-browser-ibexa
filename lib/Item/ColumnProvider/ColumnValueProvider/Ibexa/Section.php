@@ -22,7 +22,7 @@ final class Section implements ColumnValueProviderInterface
         }
 
         return $this->repository->sudo(
-            fn (): string => $this->repository
+            static fn (Repository $repository): string => $repository
                 ->getSectionService()
                 ->loadSection(
                     $item->content->contentInfo->sectionId,

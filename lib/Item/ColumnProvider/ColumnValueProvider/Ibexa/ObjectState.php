@@ -29,12 +29,12 @@ final class ObjectState implements ColumnValueProviderInterface
 
         /** @var \Ibexa\Contracts\Core\Repository\Values\ObjectState\ObjectStateGroup[] $groups */
         $groups = $this->repository->sudo(
-            fn (): iterable => $this->repository->getObjectStateService()->loadObjectStateGroups(),
+            static fn (Repository $repository): iterable => $repository->getObjectStateService()->loadObjectStateGroups(),
         );
 
         $states = array_map(
             fn (ObjectStateGroup $group): IbexaObjectState => $this->repository->sudo(
-                fn (): IbexaObjectState => $this->repository
+                static fn (Repository $repository): IbexaObjectState => $repository
                     ->getObjectStateService()
                     ->getContentState($item->content->contentInfo, $group),
             ),
