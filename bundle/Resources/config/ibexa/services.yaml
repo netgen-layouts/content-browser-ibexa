@@ -112,5 +112,7 @@ services:
 
     netgen_content_browser.column_value_provider.ibexa.visible:
         class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Visible
+        arguments:
+            - "@translator"
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ibexa\visible }

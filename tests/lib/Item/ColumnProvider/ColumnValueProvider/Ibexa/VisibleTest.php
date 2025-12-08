@@ -10,20 +10,58 @@ use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Vi
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[CoversClass(Visible::class)]
 final class VisibleTest extends TestCase
 {
+    private Stub&TranslatorInterface $translatorStub;
+
     private Visible $provider;
 
     protected function setUp(): void
     {
-        $this->provider = new Visible();
+        $this->translatorStub = self::createStub(TranslatorInterface::class);
+
+        $this->provider = new Visible($this->translatorStub);
     }
 
-    public function testGetValue(): void
+    public function testGetValueWithVisibleLocation(): void
     {
+        $this->translatorStub
+            ->method('trans')
+            ->with(
+                self::identicalTo('columns.ibexa.visible.yes'),
+                self::identicalTo([]),
+                self::identicalTo('ngcb'),
+            )
+            ->willReturn('Yes');
+
+        $item = new Item(
+            new Location(
+                [
+                    'content' => new Content(),
+                    'invisible' => false,
+                ],
+            ),
+            24,
+        );
+
+        self::assertSame(
+            'Yes',
+            $this->provider->getValue($item),
+        );
+    }
+
+    public function testGetValueWithInvisibleLocation(): void
+    {
+        $this->translatorStub
+            ->method('trans')
+            ->with(self::identicalTo('columns.ibexa.visible.no'))
+            ->willReturn('No');
+
         $item = new Item(
             new Location(
                 [
