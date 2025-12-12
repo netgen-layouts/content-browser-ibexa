@@ -9,6 +9,8 @@ use Netgen\Bundle\ContentBrowserIbexaBundle\DependencyInjection\CompilerPass\Ibe
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
 
+use function sprintf;
+
 #[CoversClass(IbexaDefaultPreviewPass::class)]
 final class IbexaDefaultPreviewPassTest extends AbstractContainerBuilderTestCase
 {
@@ -26,12 +28,12 @@ final class IbexaDefaultPreviewPassTest extends AbstractContainerBuilderTestCase
 
         foreach (['default', 'cro', 'admin'] as $scope) {
             $this->setParameter(
-                "ibexa.site_access.config.{$scope}.content_view",
+                sprintf('ibexa.site_access.config.%s.content_view', $scope),
                 ['full' => ['full_rule' => []]],
             );
 
             $this->setParameter(
-                "ibexa.site_access.config.{$scope}.location_view",
+                sprintf('ibexa.site_access.config.%s.location_view', $scope),
                 ['ngcb_preview' => ['rule1' => [], 'rule2' => []]],
             );
         }
@@ -39,11 +41,11 @@ final class IbexaDefaultPreviewPassTest extends AbstractContainerBuilderTestCase
         $this->compile();
 
         foreach (['default', 'cro', 'admin'] as $scope) {
-            $this->assertContainerBuilderHasParameter("ibexa.site_access.config.{$scope}.content_view");
-            $this->assertContainerBuilderHasParameter("ibexa.site_access.config.{$scope}.location_view");
+            $this->assertContainerBuilderHasParameter(sprintf('ibexa.site_access.config.%s.content_view', $scope));
+            $this->assertContainerBuilderHasParameter(sprintf('ibexa.site_access.config.%s.location_view', $scope));
 
             /** @var array<string, mixed[]> $contentView */
-            $contentView = $this->container->getParameter("ibexa.site_access.config.{$scope}.content_view");
+            $contentView = $this->container->getParameter(sprintf('ibexa.site_access.config.%s.content_view', $scope));
             self::assertArrayHasKey('ngcb_preview', $contentView);
             self::assertArrayHasKey('___ngcb_preview_default___', $contentView['ngcb_preview']);
 
@@ -51,7 +53,7 @@ final class IbexaDefaultPreviewPassTest extends AbstractContainerBuilderTestCase
             self::assertArrayHasKey('full_rule', $contentView['full']);
 
             /** @var array<string, mixed[]> $locationView */
-            $locationView = $this->container->getParameter("ibexa.site_access.config.{$scope}.location_view");
+            $locationView = $this->container->getParameter(sprintf('ibexa.site_access.config.%s.location_view', $scope));
             self::assertArrayHasKey('ngcb_preview', $locationView);
             self::assertArrayHasKey('___ngcb_preview_default___', $locationView['ngcb_preview']);
 
