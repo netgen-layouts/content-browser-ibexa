@@ -17,9 +17,6 @@ use function file_get_contents;
 
 final class NetgenContentBrowserIbexaExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @param mixed[] $configs
-     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader(
