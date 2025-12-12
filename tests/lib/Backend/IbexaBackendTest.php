@@ -475,7 +475,7 @@ final class IbexaBackendTest extends TestCase
     /**
      * Returns the location object used in tests.
      */
-    private function getLocation(int $id = 0, int $parentLocationId = 0, int $contentId = 0): ContractsLocation
+    private function getLocation(int $id = 0, int $parentLocationId = 0, int $contentId = 0): Location
     {
         return new Location(
             [
