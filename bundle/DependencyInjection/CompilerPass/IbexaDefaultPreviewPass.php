@@ -57,7 +57,7 @@ final class IbexaDefaultPreviewPass implements CompilerPassInterface
      */
     private function addDefaultPreviewRule(?array $scopeRules, array $defaultRule): array
     {
-        $scopeRules = $scopeRules ?? [];
+        $scopeRules ??= [];
         $contentBrowserRules = $scopeRules['ngcb_preview'] ?? [];
 
         $contentBrowserRules = [

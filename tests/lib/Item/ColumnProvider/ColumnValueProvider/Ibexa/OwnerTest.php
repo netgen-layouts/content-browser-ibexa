@@ -21,31 +21,27 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Owner::class)]
 final class OwnerTest extends TestCase
 {
-    private Stub&Repository $repositoryStub;
-
     private Stub&ContentService $contentServiceStub;
 
     private Owner $provider;
 
     protected function setUp(): void
     {
-        $this->repositoryStub = self::createStub(Repository::class);
         $this->contentServiceStub = self::createStub(ContentService::class);
 
-        $this->repositoryStub
+        $repositoryStub = self::createStub(Repository::class);
+        $repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback): mixed => $callback($this->repositoryStub),
+                static fn (callable $callback): mixed => $callback($repositoryStub),
             );
 
-        $this->repositoryStub
+        $repositoryStub
             ->method('getContentService')
             ->willReturn($this->contentServiceStub);
 
-        $this->provider = new Owner(
-            $this->repositoryStub,
-        );
+        $this->provider = new Owner($repositoryStub);
     }
 
     public function testGetValue(): void

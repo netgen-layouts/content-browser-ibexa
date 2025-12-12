@@ -21,31 +21,27 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Section::class)]
 final class SectionTest extends TestCase
 {
-    private Stub&Repository $repositoryStub;
-
     private Stub&SectionService $sectionServiceStub;
 
     private Section $provider;
 
     protected function setUp(): void
     {
-        $this->repositoryStub = self::createStub(Repository::class);
         $this->sectionServiceStub = self::createStub(SectionService::class);
 
-        $this->repositoryStub
+        $repositoryStub = self::createStub(Repository::class);
+        $repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback): mixed => $callback($this->repositoryStub),
+                static fn (callable $callback): mixed => $callback($repositoryStub),
             );
 
-        $this->repositoryStub
+        $repositoryStub
             ->method('getSectionService')
             ->willReturn($this->sectionServiceStub);
 
-        $this->provider = new Section(
-            $this->repositoryStub,
-        );
+        $this->provider = new Section($repositoryStub);
     }
 
     public function testGetValue(): void

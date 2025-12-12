@@ -22,31 +22,27 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(ObjectState::class)]
 final class ObjectStateTest extends TestCase
 {
-    private Stub&Repository $repositoryStub;
-
     private Stub&ObjectStateService $objectStateServiceStub;
 
     private ObjectState $provider;
 
     protected function setUp(): void
     {
-        $this->repositoryStub = self::createStub(Repository::class);
         $this->objectStateServiceStub = self::createStub(ObjectStateService::class);
 
-        $this->repositoryStub
+        $repositoryStub = self::createStub(Repository::class);
+        $repositoryStub
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback): mixed => $callback($this->repositoryStub),
+                static fn (callable $callback): mixed => $callback($repositoryStub),
             );
 
-        $this->repositoryStub
+        $repositoryStub
             ->method('getObjectStateService')
             ->willReturn($this->objectStateServiceStub);
 
-        $this->provider = new ObjectState(
-            $this->repositoryStub,
-        );
+        $this->provider = new ObjectState($repositoryStub);
     }
 
     public function testGetValue(): void
