@@ -46,8 +46,7 @@
     "autoload-dev": {
         "psr-4": {
             "Netgen\\ContentBrowser\\Ibexa\\Tests\\": "tests/lib/",
-            "Netgen\\Bundle\\ContentBrowserIbexaBundle\\Tests\\": "tests/bundle/",
-            "Netgen\\ContentBrowser\\Tests\\": "vendor/netgen/content-browser/tests/lib/"
+            "Netgen\\Bundle\\ContentBrowserIbexaBundle\\Tests\\": "tests/bundle/"
         }
     },
     "minimum-stability": "dev",
