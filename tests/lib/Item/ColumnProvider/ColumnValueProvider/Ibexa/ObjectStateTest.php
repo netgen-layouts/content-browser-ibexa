@@ -33,7 +33,6 @@ final class ObjectStateTest extends TestCase
         $repositoryStub = self::createStub(Repository::class);
         $repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 static fn (callable $callback): mixed => $callback($repositoryStub),
             );

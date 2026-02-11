@@ -30,7 +30,6 @@ final class ParentTagTest extends TestCase
 
         $this->tagsServiceStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 fn (callable $callback): mixed => $callback($this->tagsServiceStub),
             );
@@ -56,12 +55,10 @@ final class ParentTagTest extends TestCase
 
         $this->tagsServiceStub
             ->method('loadTag')
-            ->with(self::identicalTo(42))
             ->willReturn($parentTag);
 
         $this->translationHelperStub
             ->method('getTranslatedByMethod')
-            ->with(self::identicalTo($parentTag), self::identicalTo('getKeyword'))
             ->willReturn('Parent tag');
 
         self::assertSame(

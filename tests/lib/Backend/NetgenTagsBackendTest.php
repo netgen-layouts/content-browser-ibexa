@@ -34,7 +34,6 @@ final class NetgenTagsBackendTest extends TestCase
 
         $configResolverStub
             ->method('getParameter')
-            ->with(self::identicalTo('languages'))
             ->willReturn(['eng-GB', 'cro-HR']);
 
         $this->backend = new NetgenTagsBackend(
@@ -59,7 +58,6 @@ final class NetgenTagsBackendTest extends TestCase
     {
         $this->tagsServiceStub
             ->method('loadTag')
-            ->with(self::identicalTo(1))
             ->willReturn($this->getTag(1));
 
         $location = $this->backend->loadLocation(1);
@@ -74,7 +72,6 @@ final class NetgenTagsBackendTest extends TestCase
 
         $this->tagsServiceStub
             ->method('loadTag')
-            ->with(self::identicalTo(1))
             ->willThrowException(new IbexaNotFoundException('tag', 1));
 
         $this->backend->loadLocation(1);
@@ -84,7 +81,6 @@ final class NetgenTagsBackendTest extends TestCase
     {
         $this->tagsServiceStub
             ->method('loadTag')
-            ->with(self::identicalTo(1))
             ->willReturn($this->getTag(1));
 
         $item = $this->backend->loadItem(1);
@@ -99,7 +95,6 @@ final class NetgenTagsBackendTest extends TestCase
 
         $this->tagsServiceStub
             ->method('loadTag')
-            ->with(self::identicalTo(1))
             ->willThrowException(new IbexaNotFoundException('tag', 1));
 
         $this->backend->loadItem(1);
@@ -111,11 +106,6 @@ final class NetgenTagsBackendTest extends TestCase
 
         $this->tagsServiceStub
             ->method('loadTagChildren')
-            ->with(
-                self::identicalTo($tag),
-                self::identicalTo(0),
-                self::identicalTo(-1),
-            )
             ->willReturn(
                 new TagList([$this->getTag(0, 1), $this->getTag(0, 1)]),
             );
@@ -146,7 +136,6 @@ final class NetgenTagsBackendTest extends TestCase
 
         $this->tagsServiceStub
             ->method('getTagChildrenCount')
-            ->with(self::identicalTo($tag))
             ->willReturn(2);
 
         $count = $this->backend->getSubLocationsCount(new Item($tag, 'tag'));
@@ -167,11 +156,6 @@ final class NetgenTagsBackendTest extends TestCase
 
         $this->tagsServiceStub
             ->method('loadTagChildren')
-            ->with(
-                self::identicalTo($tag),
-                self::identicalTo(0),
-                self::identicalTo(25),
-            )
             ->willReturn(
                 new TagList([$this->getTag(0, 1), $this->getTag(0, 1)]),
             );
@@ -194,11 +178,6 @@ final class NetgenTagsBackendTest extends TestCase
 
         $this->tagsServiceStub
             ->method('loadTagChildren')
-            ->with(
-                self::identicalTo($tag),
-                self::identicalTo(5),
-                self::identicalTo(10),
-            )
             ->willReturn(new TagList([$this->getTag(0, 1), $this->getTag(0, 1)]));
 
         $items = [];
@@ -227,7 +206,6 @@ final class NetgenTagsBackendTest extends TestCase
 
         $this->tagsServiceStub
             ->method('getTagChildrenCount')
-            ->with(self::identicalTo($tag))
             ->willReturn(2);
 
         $count = $this->backend->getSubItemsCount(new Item($tag, 'tag'));

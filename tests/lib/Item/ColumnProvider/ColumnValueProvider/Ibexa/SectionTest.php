@@ -32,7 +32,6 @@ final class SectionTest extends TestCase
         $repositoryStub = self::createStub(Repository::class);
         $repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 static fn (callable $callback): mixed => $callback($repositoryStub),
             );
@@ -73,7 +72,6 @@ final class SectionTest extends TestCase
 
         $this->sectionServiceStub
             ->method('loadSection')
-            ->with(self::identicalTo(42))
             ->willReturn($section);
 
         self::assertSame(

@@ -32,11 +32,6 @@ final class VisibleTest extends TestCase
     {
         $this->translatorStub
             ->method('trans')
-            ->with(
-                self::identicalTo('columns.ibexa.visible.yes'),
-                self::identicalTo([]),
-                self::identicalTo('ngcb'),
-            )
             ->willReturn('Yes');
 
         $item = new Item(
@@ -59,7 +54,6 @@ final class VisibleTest extends TestCase
     {
         $this->translatorStub
             ->method('trans')
-            ->with(self::identicalTo('columns.ibexa.visible.no'))
             ->willReturn('No');
 
         $item = new Item(

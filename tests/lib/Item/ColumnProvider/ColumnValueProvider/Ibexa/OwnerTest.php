@@ -32,7 +32,6 @@ final class OwnerTest extends TestCase
         $repositoryStub = self::createStub(Repository::class);
         $repositoryStub
             ->method('sudo')
-            ->with(self::anything())
             ->willReturnCallback(
                 static fn (callable $callback): mixed => $callback($repositoryStub),
             );
@@ -78,7 +77,6 @@ final class OwnerTest extends TestCase
 
         $this->contentServiceStub
             ->method('loadContent')
-            ->with(self::identicalTo(42))
             ->willReturn($ownerContent);
 
         self::assertSame(
@@ -110,7 +108,6 @@ final class OwnerTest extends TestCase
 
         $this->contentServiceStub
             ->method('loadContent')
-            ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('user', 42));
 
         self::assertSame('', $this->provider->getValue($item));

@@ -78,7 +78,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $locations = $this->backend->getSections();
@@ -99,7 +98,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $location = $this->backend->loadLocation(2);
@@ -120,7 +118,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $this->backend->loadLocation(2);
@@ -142,7 +139,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $item = $this->backend->loadItem(2);
@@ -173,7 +169,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $item = $this->backend->loadItem(2);
@@ -198,7 +193,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $this->backend->loadItem(2);
@@ -226,7 +220,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $locations = $this->backend->getSubLocations(
@@ -265,7 +258,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubLocationsCount(
@@ -296,7 +288,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
@@ -334,7 +325,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
@@ -376,7 +366,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubItemsCount(
@@ -406,7 +395,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
 
         $result = $this->backend->searchItems(new SearchQuery('test'));
@@ -435,7 +423,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
 
         $query = new SearchQuery('test');
@@ -464,7 +451,6 @@ final class IbexaBackendTest extends TestCase
 
         $this->searchServiceStub
             ->method('findLocations')
-            ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
 
         $count = $this->backend->searchItemsCount(new SearchQuery('test'));
